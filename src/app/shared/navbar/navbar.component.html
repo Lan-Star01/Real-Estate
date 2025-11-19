@@ -1,1 +1,37 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex gap-1" routerLink="/">
+      <img src="assets/images/logo.svg" alt="Logo" class="d-inline-block">
+    </a>
+
+    <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center">
+
+        <a *ngIf="!currentUser" routerLink="/login" class="btn login-btn d-flex align-items-center">
+          <span class="fw-medium">Log In</span>
+        </a>
+
+        <div *ngIf="currentUser" class="dropdown user-dropdown">
+          <button
+            class="btn user-dropdown-btn d-flex align-items-center gap-2"
+            (click)="toggleDropdown()"
+            type="button">
+            <i class="bi bi-person-circle"></i>
+            <span class="fw-medium">{{ currentUser.displayName || currentUser.email }}</span>
+            <i class="bi" [class.bi-chevron-down]="!dropdownOpen" [class.bi-chevron-up]="dropdownOpen"></i>
+          </button>
+
+          <div class="dropdown-menu" [class.show]="dropdownOpen">
+            <button class="dropdown-item" (click)="logout()">
+              <i class="bi bi-box-arrow-right me-2"></i>
+              Logout
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div *ngIf="dropdownOpen" class="dropdown-backdrop" (click)="closeDropdown()"></div>

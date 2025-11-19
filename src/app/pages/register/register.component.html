@@ -1,1 +1,145 @@
-<p>register works!</p>
+<div class="container-fluid vh-100 d-flex p-0 auth-gradient-bg">
+  <div class="col-md-12 d-flex col-12 align-items-center justify-content-center">
+    <div class="register-container auth-glass-container">
+      <h3 class="mb-4 fw-semibold">Create Account</h3>
+
+      <div *ngIf="error" class="alert alert-danger glass-feedback mb-3" role="alert">
+        {{ error }}
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form d-flex flex-column">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="mb-3 position-relative input-container">
+              <div class="position-relative">
+                <input
+                  type="text"
+                  class="form-control glass-input"
+                  formControlName="firstName"
+                  placeholder=" "
+                  [class.is-invalid]="isFieldInvalid('firstName')"
+                  [class.is-valid]="registerForm.get('firstName')?.valid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)"
+                />
+                <label class="floating-label">First Name <span class="text-danger">*</span></label>
+              </div>
+              <div *ngIf="isFieldInvalid('firstName')" class="glass-feedback d-block">
+                {{ getFieldError('firstName') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mb-3 position-relative input-container">
+              <div class="position-relative">
+                <input
+                  type="text"
+                  class="form-control glass-input"
+                  formControlName="lastName"
+                  placeholder=" "
+                  [class.is-invalid]="isFieldInvalid('lastName')"
+                  [class.is-valid]="registerForm.get('lastName')?.valid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)"
+                />
+                <label class="floating-label">Last Name <span class="text-danger">*</span></label>
+              </div>
+              <div *ngIf="isFieldInvalid('lastName')" class="glass-feedback d-block">
+                {{ getFieldError('lastName') }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 position-relative input-container">
+          <div class="position-relative">
+            <input
+              type="email"
+              class="form-control glass-input"
+              formControlName="email"
+              placeholder=" "
+              [class.is-invalid]="isFieldInvalid('email')"
+              [class.is-valid]="registerForm.get('email')?.valid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)"
+            />
+            <label class="floating-label">Email <span class="text-danger">*</span></label>
+          </div>
+          <div *ngIf="isFieldInvalid('email')" class="glass-feedback d-block">
+            {{ getFieldError('email') }}
+          </div>
+        </div>
+
+        <div class="mb-3 position-relative input-container">
+          <div class="position-relative">
+            <input
+              type="tel"
+              class="form-control glass-input"
+              formControlName="phone"
+              placeholder=" "
+              maxlength="9"
+              [class.is-invalid]="isFieldInvalid('phone')"
+              [class.is-valid]="registerForm.get('phone')?.valid && (registerForm.get('phone')?.dirty || registerForm.get('phone')?.touched)"
+            />
+            <label class="floating-label">Phone Number <span class="text-danger">*</span></label>
+          </div>
+          <div *ngIf="isFieldInvalid('phone')" class="glass-feedback d-block">
+            {{ getFieldError('phone') }}
+          </div>
+        </div>
+
+        <div class="mb-3 position-relative input-container">
+          <div class="position-relative">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control glass-input"
+              formControlName="password"
+              placeholder=" "
+              [class.is-invalid]="isFieldInvalid('password')"
+              [class.is-valid]="registerForm.get('password')?.valid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)"
+            />
+            <label class="floating-label">Password <span class="text-danger">*</span></label>
+            <button
+              type="button"
+              class="btn password-toggle-btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent"
+              (click)="togglePasswordVisibility('password')"
+              style="z-index: 10;">
+              <i [class]="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+            </button>
+          </div>
+          <div *ngIf="isFieldInvalid('password')" class="glass-feedback d-block">
+            {{ getFieldError('password') }}
+          </div>
+        </div>
+
+        <div class="mb-4 position-relative input-container">
+          <div class="position-relative">
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              class="form-control glass-input"
+              formControlName="confirmPassword"
+              placeholder=" "
+              [class.is-invalid]="isFieldInvalid('confirmPassword')"
+              [class.is-valid]="registerForm.get('confirmPassword')?.valid && !registerForm.errors?.['passwordMismatch'] && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)"
+            />
+            <label class="floating-label">Confirm Password <span class="text-danger">*</span></label>
+            <button
+              type="button"
+              class="btn password-toggle-btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent"
+              (click)="togglePasswordVisibility('confirmPassword')"
+              style="z-index: 10;">
+              <i [class]="showConfirmPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+            </button>
+          </div>
+          <div *ngIf="isFieldInvalid('confirmPassword')" class="glass-feedback d-block">
+            {{ getFieldError('confirmPassword') }}
+          </div>
+        </div>
+
+        <button type="submit" class="btn register-btn glass-btn w-100" [disabled]="loading || registerForm.invalid">
+          {{ loading ? 'Creating Account...' : 'Create Account' }}
+        </button>
+      </form>
+
+      <p class="text-center mt-3 auth-text-prompt">
+        Already have an account?
+        <a routerLink="/login" class="auth-link">Log In</a>
+      </p>
+    </div>
+  </div>
+</div>

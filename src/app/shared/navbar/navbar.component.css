@@ -1,0 +1,97 @@
+.user-dropdown {
+  position: relative;
+}
+
+.user-dropdown-btn {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border-radius: 8px;
+  color: #F93B1D;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.user-dropdown-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #F93B1D;
+  color: #F93B1D;
+}
+
+.user-dropdown-btn i.bi-person-circle {
+  font-size: 1.5rem;
+}
+
+.user-dropdown-btn i.bi-chevron-down,
+.user-dropdown-btn i.bi-chevron-up {
+  font-size: 0.8rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background-color: white;
+  border: 1px solid #F93B1D;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #F93B1D;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #F93B1D;
+}
+
+.dropdown-item i {
+  font-size: 1.1rem;
+}
+
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 999;
+}
+
+.login-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  color: #F93B1D;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #F93B1D;
+  border-color: #F93B1D;
+  color: white;
+}

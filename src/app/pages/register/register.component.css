@@ -1,0 +1,35 @@
+.register-container {
+  max-width: 550px;
+  width: 100%;
+  padding: 3rem 3rem;
+}
+
+.auth-form {
+  margin-top: 2.5rem;
+}
+
+.input-container {
+  margin-bottom: 1.5rem;
+}
+
+.register-btn {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 991px) {
+  .register-container {
+    margin: 2rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .register-container {
+    padding: 2.5rem 2rem;
+    margin: 1.5rem 1rem;
+    border-radius: 20px;
+  }
+
+  .row.g-3 {
+    gap: 0 !important;
+  }
+}

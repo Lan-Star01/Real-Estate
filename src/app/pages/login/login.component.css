@@ -1,0 +1,31 @@
+.login-container {
+  max-width: 480px;
+  width: 100%;
+  padding: 3.5rem 3rem;
+}
+
+.auth-form {
+  margin-top: 3rem;
+}
+
+.input-container {
+  margin-bottom: 1.75rem;
+}
+
+.red-btn {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 991px) {
+  .login-container {
+    margin: 2rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container {
+    padding: 2.5rem 2rem;
+    margin: 1.5rem 1rem;
+    border-radius: 20px;
+  }
+}

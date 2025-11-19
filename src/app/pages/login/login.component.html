@@ -1,1 +1,64 @@
-<p>login works!</p>
+<div class="container-fluid vh-100 d-flex p-0 auth-gradient-bg">
+  <div class="col-md-12 d-flex col-12 align-items-center justify-content-center">
+    <div class="login-container auth-glass-container">
+      <h3 class="mb-5 fw-semibold">Log in</h3>
+
+      <div *ngIf="error && !isFieldInvalid('password')" class="alert alert-danger glass-feedback mb-3" role="alert">
+        {{ error }}
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form d-flex flex-column">
+        <div class="mb-3 position-relative input-container">
+          <div class="position-relative">
+            <input
+              type="email"
+              class="form-control glass-input"
+              formControlName="email"
+              placeholder=" "
+              [class.is-invalid]="isFieldInvalid('email')"
+              [class.is-valid]="loginForm.get('email')?.valid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
+            />
+            <label class="floating-label">Email <span class="text-danger">*</span></label>
+          </div>
+          <div *ngIf="isFieldInvalid('email')" class="glass-feedback d-block">
+            {{ getFieldError('email') }}
+          </div>
+        </div>
+
+        <div class="mb-4 position-relative input-container">
+          <div class="position-relative">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control glass-input"
+              formControlName="password"
+              placeholder=" "
+              [class.is-invalid]="isFieldInvalid('password')"
+              [class.is-valid]="loginForm.get('password')?.valid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+            />
+            <label class="floating-label">Password <span class="text-danger">*</span></label>
+            <button
+              type="button"
+              class="btn password-toggle-btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent"
+              (click)="togglePasswordVisibility()"
+              style="z-index: 10;">
+              <i [class]="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+            </button>
+          </div>
+          <div *ngIf="isFieldInvalid('password')" class="glass-feedback d-block">
+            {{ getFieldError('password') }}
+          </div>
+        </div>
+
+        <button type="submit" class="btn red-btn glass-btn w-100" [disabled]="loading">
+          {{ loading ? 'Logging in...' : 'Log In' }}
+        </button>
+      </form>
+
+
+      <p class="text-center mt-3 auth-text-prompt">
+        Not a member?
+        <a routerLink="/register" class="auth-link">Register</a>
+      </p>
+    </div>
+  </div>
+</div>
