@@ -194,7 +194,7 @@
         <a routerLink="/add-listing" class="btn listing orange-btn">
           <i class="bi bi-plus"></i> ლისტინგის დამატება
         </a>
-        <button type="button" class="btn orange-line-btn">
+        <button type="button" class="btn orange-line-btn" (click)="openAddAgentModal()">
           <i class="bi bi-plus"></i> აგენტის დამატება
         </button>
       </div>
@@ -249,3 +249,9 @@
   class="dropdown-backdrop"
   (click)="closeAllDropdowns()">
 </div>
+
+<app-add-agent-modal
+  *ngIf="showAddAgentModal"
+  (close)="closeAddAgentModal()"
+  (agentAdded)="onAgentAdded($event)">
+</app-add-agent-modal>

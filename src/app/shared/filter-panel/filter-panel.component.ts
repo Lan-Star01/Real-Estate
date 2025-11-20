@@ -3,6 +3,7 @@ import { GeoService } from '../../core/services/geo.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AddAgentModalComponent } from '../add-agent-modal/add-agent-modal.component';
 
 export interface FilterCriteria {
   regions: number[];
@@ -15,7 +16,7 @@ export interface FilterCriteria {
 
 @Component({
   selector: 'app-filter-panel',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, AddAgentModalComponent],
   templateUrl: './filter-panel.component.html',
   styleUrl: './filter-panel.component.css'
 })
@@ -28,6 +29,9 @@ export class FilterPanelComponent implements OnInit {
   priceDropdownOpen = false;
   areaDropdownOpen = false;
   bedroomsDropdownOpen = false;
+
+  // Modal state
+  showAddAgentModal = false;
 
   selectedRegions: number[] = [];
   priceMin: number | null = null;
@@ -218,5 +222,18 @@ export class FilterPanelComponent implements OnInit {
            this.areaMin !== null ||
            this.areaMax !== null ||
            this.bedrooms !== null;
+  }
+
+  openAddAgentModal() {
+    this.showAddAgentModal = true;
+  }
+
+  closeAddAgentModal() {
+    this.showAddAgentModal = false;
+  }
+
+  onAgentAdded(agent: any) {
+    console.log('Agent added successfully:', agent);
+    this.showAddAgentModal = false;
   }
 }

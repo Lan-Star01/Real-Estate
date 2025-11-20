@@ -1,1 +1,126 @@
-<p>add-agent-modal works!</p>
+<div class="modal-backdrop" (click)="closeModal()"></div>
+
+<div class="modal-container" (click)="$event.stopPropagation()">
+  <div class="modal-content">
+    <h2 class="modal-title">აგენტის დამატება</h2>
+
+    <form [formGroup]="agentForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">
+            სახელი <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [class.is-invalid]="isFieldInvalid('name')"
+            [class.is-valid]="isFieldValid('name')">
+          <div class="validation-feedback" [class.valid]="isFieldValid('name')" [class.invalid]="isFieldInvalid('name')">
+            <i class="bi bi-check-circle-fill"></i>
+            მინიმუმ 2 სიმბოლო
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">
+            გვარი <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="surname"
+            [class.is-invalid]="isFieldInvalid('surname')"
+            [class.is-valid]="isFieldValid('surname')">
+          <div class="validation-feedback" [class.valid]="isFieldValid('surname')" [class.invalid]="isFieldInvalid('surname')">
+            <i class="bi bi-check-circle-fill"></i>
+            მინიმუმ 2 სიმბოლო
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">
+            ელ-ფოსტა <span class="required">*</span>
+          </label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            [class.is-invalid]="isFieldInvalid('email')"
+            [class.is-valid]="isFieldValid('email')">
+          <div class="validation-feedback" [class.valid]="isFieldValid('email')" [class.invalid]="isFieldInvalid('email')">
+            <i class="bi bi-check-circle-fill"></i>
+            გამოიყენეთ &#64;redberry.ge ფოსტა
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">
+            ტელეფონის ნომერი <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="phone"
+            placeholder="5XXXXXXXX"
+            maxlength="9"
+            [class.is-invalid]="isFieldInvalid('phone')"
+            [class.is-valid]="isFieldValid('phone')">
+          <div class="validation-feedback" [class.valid]="isFieldValid('phone')" [class.invalid]="isFieldInvalid('phone')">
+            <i class="bi bi-check-circle-fill"></i>
+            მხოლოდ რიცხვები
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">
+          ატვირთეთ ფოტო <span class="required">*</span>
+        </label>
+
+        <div class="upload-area" (click)="imagePreview ? null : fileInput.click()">
+          <div *ngIf="!imagePreview" class="upload-content">
+            <div class="upload-icon">
+              <i class="bi bi-plus-circle"></i>
+            </div>
+          </div>
+
+          <div *ngIf="imagePreview" class="image-preview-wrapper">
+            <img [src]="imagePreview" alt="Avatar preview" class="image-preview">
+            <button type="button" class="remove-image-btn" (click)="removeImage(); $event.stopPropagation()">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            style="display: none;">
+        </div>
+
+        <div *ngIf="isFieldInvalid('avatar')" class="validation-feedback invalid">
+          <i class="bi bi-check-circle-fill"></i>
+          სავალდებულო
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+        {{ errorMessage }}
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="orange-line-btn" (click)="closeModal()" [disabled]="isSubmitting">
+          გაუქმება
+        </button>
+        <button type="submit" class="orange-btn" [disabled]="isSubmitting">
+          <span class="text-white" *ngIf="!isSubmitting">დაამატე აგენტი</span>
+          <span class="text-white" *ngIf="isSubmitting">დამატება...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
