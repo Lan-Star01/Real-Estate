@@ -1,1 +1,251 @@
-<p>filter-panel works!</p>
+<div class="container-fluid filter-panel">
+  <div class="row mb-4">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-12 col-xl-12 col-xxl-6 col-auto mb-3 mb-md-0">
+      <div class="filter-dropdowns d-flex flex-wrap">
+
+        <div class="filter-dropdown-wrapper">
+          <button
+            class="btn filter-btn"
+            (click)="toggleRegionDropdown()"
+            [class.active]="selectedRegions.length > 0"
+            [class.open]="regionDropdownOpen">
+            რეგიონი
+            <i class="bi" [class.bi-chevron-down]="!regionDropdownOpen" [class.bi-chevron-up]="regionDropdownOpen"></i>
+          </button>
+
+          <div class="filter-dropdown" *ngIf="regionDropdownOpen">
+            <h6 class="dropdown-title">რეგიონის მიხედვით</h6>
+            <div class="region-grid">
+              <label *ngFor="let region of regions" class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [checked]="isRegionSelected(region.id)"
+                  (change)="toggleRegion(region.id)">
+                <span>{{ region.name }}</span>
+              </label>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-apply" (click)="applyFilters()">არჩევა</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-dropdown-wrapper">
+          <button
+            class="btn filter-btn"
+            (click)="togglePriceDropdown()"
+            [class.active]="priceMin !== null || priceMax !== null"
+            [class.open]="priceDropdownOpen">
+            საფასო კატეგორია
+            <i class="bi" [class.bi-chevron-down]="!priceDropdownOpen" [class.bi-chevron-up]="priceDropdownOpen"></i>
+          </button>
+
+          <div class="filter-dropdown" *ngIf="priceDropdownOpen">
+            <h6 class="dropdown-title">ფასის მიხედვით</h6>
+
+            <div class="range-inputs">
+              <div class="range-input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="დან"
+                  [(ngModel)]="priceMin"
+                  (ngModelChange)="validatePrice()">
+                <span class="currency">₾</span>
+              </div>
+              <div class="range-input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="მდე"
+                  [(ngModel)]="priceMax"
+                  (ngModelChange)="validatePrice()">
+                <span class="currency">₾</span>
+              </div>
+            </div>
+
+            <div *ngIf="priceError" class="validation-error">{{ priceError }}</div>
+
+            <div class="price-options">
+              <div class="price-column">
+                <h6>მინ. ფასი</h6>
+                <button
+                  *ngFor="let price of priceOptions"
+                  class="price-option"
+                  (click)="selectPriceOption(price, 'min')">
+                  {{ price | number }} ₾
+                </button>
+              </div>
+              <div class="price-column">
+                <h6>მაქს. ფასი</h6>
+                <button
+                  *ngFor="let price of priceOptions"
+                  class="price-option"
+                  (click)="selectPriceOption(price, 'max')">
+                  {{ price | number }} ₾
+                </button>
+              </div>
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-apply" (click)="applyFilters()" [disabled]="!!priceError">არჩევა</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-dropdown-wrapper">
+          <button
+            class="btn filter-btn"
+            (click)="toggleAreaDropdown()"
+            [class.active]="areaMin !== null || areaMax !== null"
+            [class.open]="areaDropdownOpen">
+            ფართობი
+            <i class="bi" [class.bi-chevron-down]="!areaDropdownOpen" [class.bi-chevron-up]="areaDropdownOpen"></i>
+          </button>
+
+          <div class="filter-dropdown" *ngIf="areaDropdownOpen">
+            <h6 class="dropdown-title">ფართობის მიხედვით</h6>
+
+            <div class="range-inputs">
+              <div class="range-input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="დან"
+                  [(ngModel)]="areaMin"
+                  (ngModelChange)="validateArea()">
+                <span class="currency">მ²</span>
+              </div>
+              <div class="range-input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="მდე"
+                  [(ngModel)]="areaMax"
+                  (ngModelChange)="validateArea()">
+                <span class="currency">მ²</span>
+              </div>
+            </div>
+
+            <div *ngIf="areaError" class="validation-error">{{ areaError }}</div>
+
+            <div class="price-options">
+              <div class="price-column">
+                <h6>მინ. მ²</h6>
+                <button
+                  *ngFor="let area of areaOptions"
+                  class="price-option"
+                  (click)="selectAreaOption(area, 'min')">
+                  {{ area | number }} მ²
+                </button>
+              </div>
+              <div class="price-column">
+                <h6>მაქს. მ²</h6>
+                <button
+                  *ngFor="let area of areaOptions"
+                  class="price-option"
+                  (click)="selectAreaOption(area, 'max')">
+                  {{ area | number }} მ²
+                </button>
+              </div>
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-apply" (click)="applyFilters()" [disabled]="!!areaError">არჩევა</button>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="filter-dropdown-wrapper">
+          <button
+            class="btn filter-btn"
+            (click)="toggleBedroomsDropdown()"
+            [class.active]="bedrooms !== null"
+            [class.open]="bedroomsDropdownOpen">
+            საძინებლების რაოდენობა
+            <i class="bi" [class.bi-chevron-down]="!bedroomsDropdownOpen" [class.bi-chevron-up]="bedroomsDropdownOpen"></i>
+          </button>
+
+          <div class="filter-dropdown bedrooms-dropdown" *ngIf="bedroomsDropdownOpen">
+            <h6 class="dropdown-title">საძინებლების რაოდენობა</h6>
+
+            <div class="bedrooms-input">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="2"
+                [(ngModel)]="bedrooms"
+                min="0">
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-apply" (click)="applyFilters()">არჩევა</button>
+            </div>
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-12">
+      <div class="listing_and_agent-button d-flex gap-3 justify-content-md-end">
+        <a routerLink="/add-listing" class="btn listing orange-btn">
+          <i class="bi bi-plus"></i> ლისტინგის დამატება
+        </a>
+        <button type="button" class="btn orange-line-btn">
+          <i class="bi bi-plus"></i> აგენტის დამატება
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="hasActiveFilters()">
+    <div class="col-12">
+      <div class="active-filters d-flex gap-2 align-items-center flex-wrap">
+
+        <span *ngIf="selectedRegions.length > 0" class="filter-tag">
+          {{ getSelectedRegionNames() }}
+          <i class="bi bi-x" (click)="clearRegionFilter()"></i>
+        </span>
+
+        <span *ngIf="priceMin !== null || priceMax !== null" class="filter-tag">
+          <ng-container *ngIf="priceMin !== null">{{ priceMin | number }} ₾</ng-container>
+          <ng-container *ngIf="priceMin === null">0 ₾</ng-container>
+          -
+          <ng-container *ngIf="priceMax !== null">{{ priceMax | number }} ₾</ng-container>
+          <ng-container *ngIf="priceMax === null">∞</ng-container>
+          <i class="bi bi-x" (click)="clearPriceFilter()"></i>
+        </span>
+
+        <span *ngIf="areaMin !== null || areaMax !== null" class="filter-tag">
+          <ng-container *ngIf="areaMin !== null">{{ areaMin | number }}</ng-container>
+          <ng-container *ngIf="areaMin === null">0</ng-container>
+          მ² -
+          <ng-container *ngIf="areaMax !== null">{{ areaMax | number }}</ng-container>
+          <ng-container *ngIf="areaMax === null">∞</ng-container>
+          მ²
+          <i class="bi bi-x" (click)="clearAreaFilter()"></i>
+        </span>
+
+        <span *ngIf="bedrooms !== null" class="filter-tag">
+          {{ bedrooms }}
+          <i class="bi bi-x" (click)="clearBedroomsFilter()"></i>
+        </span>
+
+        <button class="btn btn-clear-all" (click)="clearAllFilters()">
+          გასუფთავება
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div
+  *ngIf="regionDropdownOpen || priceDropdownOpen || areaDropdownOpen || bedroomsDropdownOpen"
+  class="dropdown-backdrop"
+  (click)="closeAllDropdowns()">
+</div>

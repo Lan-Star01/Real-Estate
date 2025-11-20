@@ -1,2 +1,15 @@
-<app-filter-panel></app-filter-panel>
-<p>listings works!</p>
+<app-filter-panel (filtersChanged)="onFiltersChanged($event)"></app-filter-panel>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <p *ngIf="filteredListings.length === 0" class="no-results">
+        აღნიშნული მონაცემებით განცხადება არ იძებნება
+      </p>
+
+      <div *ngIf="filteredListings.length > 0">
+        <p>ნაპოვნი განცხადებები: {{ filteredListings.length }}</p>
+      </div>
+    </div>
+  </div>
+</div>

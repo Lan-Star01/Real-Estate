@@ -1,3 +1,45 @@
+* {
+  color: #021526;
+}
+
+.orange-btn {
+  padding: 0.625rem 1rem;
+  background-color: #F93B1D;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.orange-btn:hover {
+  background-color: #df3419;
+  color: white;
+}
+
+.orange-line-btn {
+  padding: 0.625rem 1rem;
+  background-color: white;
+  color: #F93B1D;
+  border: 1px solid #F93B1D;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.orange-line-btn:hover {
+  background-color: #fff5f3;
+}
+
 .auth-gradient-bg {
   min-height: 100vh;
   padding: 0;

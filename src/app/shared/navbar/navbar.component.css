@@ -95,3 +95,7 @@
   border-color: #F93B1D;
   color: white;
 }
+
+.dropdown-item .bi-box-arrow-right{
+  color: #F93B1D;
+}

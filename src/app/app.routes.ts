@@ -22,4 +22,11 @@ export const routes: Routes = [
         (m) => m.RegisterComponent
       ),
   },
+  {
+    path: 'add-listing',
+    loadComponent: () =>
+      import('./pages/add-listing/add-listing.component').then(
+        (m) => m.AddListingComponent
+      ),
+  },
 ];

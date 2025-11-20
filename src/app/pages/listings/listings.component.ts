@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { GeoService } from '../../core/services/geo.service';
 import { ListingsService } from '../../core/services/listings.service';
-import { FilterPanelComponent } from "../../shared/filter-panel/filter-panel.component";
+import { FilterPanelComponent, FilterCriteria } from "../../shared/filter-panel/filter-panel.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-listings',
-  imports: [FilterPanelComponent],
+  imports: [FilterPanelComponent, CommonModule],
   templateUrl: './listings.component.html',
   styleUrl: './listings.component.css'
 })
 export class ListingsComponent implements OnInit {
-  cities: any[] = [];
-  regions: any[] = [];
+
   listings: any[] = [];
+  filteredListings: any[] = [];
+  currentFilters: FilterCriteria | null = null;
 
   constructor(
     private geoService: GeoService,
@@ -20,8 +22,6 @@ export class ListingsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadCities();
-    this.loadRegions();
     this.loadListings();
   }
 
@@ -32,6 +32,8 @@ export class ListingsComponent implements OnInit {
         console.log('API call successful!', data);
         console.log('Number of listings:', data?.length || 0);
         this.listings = data;
+        this.filteredListings = data;
+        this.applyCurrentFilters();
       },
       error: (error) => {
         console.error('API call failed:', error);
@@ -41,25 +43,56 @@ export class ListingsComponent implements OnInit {
     });
   }
 
-  loadCities() {
-    this.geoService.getCities().subscribe({
-      next: (data) => {
-        this.cities = data;
-      },
-      error: (error) => {
-        console.error('Error loading cities:', error);
-      }
-    });
+  onFiltersChanged(filters: FilterCriteria) {
+    console.log('Filters changed:', filters);
+    this.currentFilters = filters;
+    this.applyCurrentFilters();
   }
 
-  loadRegions() {
-    this.geoService.getRegions().subscribe({
-      next: (data) => {
-        this.regions = data;
-      },
-      error: (error) => {
-        console.error('Error loading regions:', error);
+  applyCurrentFilters() {
+    if (!this.currentFilters) {
+      this.filteredListings = this.listings;
+      return;
+    }
+
+    this.filteredListings = this.listings.filter(listing => {
+      if (this.currentFilters!.regions.length > 0) {
+        if (!this.currentFilters!.regions.includes(listing.city?.region?.id)) {
+          return false;
+        }
       }
+
+      if (this.currentFilters!.priceMin !== null) {
+        if (listing.price < this.currentFilters!.priceMin) {
+          return false;
+        }
+      }
+      if (this.currentFilters!.priceMax !== null) {
+        if (listing.price > this.currentFilters!.priceMax) {
+          return false;
+        }
+      }
+
+      if (this.currentFilters!.areaMin !== null) {
+        if (listing.area < this.currentFilters!.areaMin) {
+          return false;
+        }
+      }
+      if (this.currentFilters!.areaMax !== null) {
+        if (listing.area > this.currentFilters!.areaMax) {
+          return false;
+        }
+      }
+
+      if (this.currentFilters!.bedrooms !== null) {
+        if (listing.bedrooms !== this.currentFilters!.bedrooms) {
+          return false;
+        }
+      }
+
+      return true;
     });
+
+    console.log(`Filtered: ${this.filteredListings.length} out of ${this.listings.length} listings`);
   }
 }
