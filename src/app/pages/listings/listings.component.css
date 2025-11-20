@@ -1,0 +1,147 @@
+.listings-container {
+  padding: 20px 0 40px;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 18px;
+  color: #021526;
+  margin: 40px 0;
+}
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+  padding: 0 15px;
+}
+
+.listing-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid #f0f0f0;
+}
+
+.listing-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 307px;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.listing-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.listing-tag {
+  position: absolute;
+  top: 23px;
+  left: 23px;
+  background-color: rgba(2, 21, 38, 0.5);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.listing-tag.rental {
+  background-color: rgba(2, 21, 38, 0.5);
+}
+
+.card-content {
+  padding: 22px 25px 25px;
+}
+
+.listing-price {
+  font-size: 28px;
+  font-weight: 700;
+  color: #021526;
+  margin: 0 0 6px 0;
+}
+
+.listing-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #021526B8;
+  font-size: 16px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.listing-location i {
+  font-size: 16px;
+}
+
+.listing-details {
+  display: flex;
+  gap: 32px;
+  padding-top: 20px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #021526B8;
+  font-size: 16px;
+}
+
+.detail-item i {
+  font-size: 20px;
+  color: #021526;
+}
+
+@media (max-width: 1400px) {
+  .listings-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .listings-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card-image-wrapper {
+    height: 250px;
+  }
+
+  .listing-price {
+    font-size: 24px;
+  }
+
+  .listing-details {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-content {
+    padding: 18px 20px 20px;
+  }
+
+  .listing-details {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}

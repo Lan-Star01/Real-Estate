@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GeoService } from '../../core/services/geo.service';
 import { ListingsService } from '../../core/services/listings.service';
 import { FilterPanelComponent, FilterCriteria } from "../../shared/filter-panel/filter-panel.component";
@@ -17,6 +18,7 @@ export class ListingsComponent implements OnInit {
   currentFilters: FilterCriteria | null = null;
 
   constructor(
+    private router: Router,
     private geoService: GeoService,
     private listingsService: ListingsService
   ) {}
@@ -94,5 +96,9 @@ export class ListingsComponent implements OnInit {
     });
 
     console.log(`Filtered: ${this.filteredListings.length} out of ${this.listings.length} listings`);
+  }
+
+  navigateToDetails(listingId: number) {
+    this.router.navigate(['/listing', listingId]);
   }
 }

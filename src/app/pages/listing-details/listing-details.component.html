@@ -1,0 +1,110 @@
+<div class="container-fluid listing-details-container">
+  <div class="row">
+    <div class="col-12">
+
+      <div *ngIf="loading" class="loading-container">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">იტვირთება...</span>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error-container">
+        <p class="error-message">{{ error }}</p>
+        <button class="btn btn-primary" (click)="goBack()">უკან დაბრუნება</button>
+      </div>
+
+      <div *ngIf="!loading && !error && listing" class="listing-details-content container-fluid ">
+
+        <div class="back-button-row mb-4">
+          <button class="btn btn-link back-link" (click)="goBack()">
+            <i class="bi bi-arrow-left"></i> 
+          </button>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-7 col-md-12 mb-4">
+            <div class="listing-image-wrapper">
+              <img [src]="listing.image" [alt]="listing.address" class="listing-image">
+              <span class="listing-tag" [class.rental]="listing.is_rental === 1">
+                {{ listing.is_rental === 1 ? 'ქირავდება' : 'იყიდება' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="col-lg-5 col-md-12">
+            <div class="listing-info-card">
+              <h1 class="listing-price">{{ listing.price | number }} ₾</h1>
+
+              <div class="info-section">
+                <div class="info-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>{{ listing.city?.name }}, {{ listing.address }}</span>
+                </div>
+
+                <div class="info-details-grid">
+                  <div class="info-detail">
+                    <i class="bi bi-house"></i>
+                    <div>
+                      <span class="detail-label">საძინებლები</span>
+                      <span class="detail-value">{{ listing.bedrooms }}</span>
+                    </div>
+                  </div>
+
+                  <div class="info-detail">
+                    <i class="bi bi-columns-gap"></i>
+                    <div>
+                      <span class="detail-label">ფართობი</span>
+                      <span class="detail-value">{{ listing.area }} მ²</span>
+                    </div>
+                  </div>
+
+                  <div class="info-detail">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <div>
+                      <span class="detail-label">საფოსტო ინდექსი</span>
+                      <span class="detail-value">{{ listing.zip_code }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="description-section">
+                <h5>აღწერა</h5>
+                <p>{{ listing.description }}</p>
+              </div>
+
+              <div class="agent-section" *ngIf="listing.agent">
+                <h5>აგენტი</h5>
+                <div class="agent-card">
+                  <img [src]="listing.agent.avatar" [alt]="listing.agent.name" class="agent-avatar">
+                  <div class="agent-info">
+                    <h6>{{ listing.agent.name }} {{ listing.agent.surname }}</h6>
+                    <div class="agent-contact">
+                      <div class="contact-item">
+                        <i class="bi bi-envelope"></i>
+                        <span>{{ listing.agent.email }}</span>
+                      </div>
+                      <div class="contact-item">
+                        <i class="bi bi-telephone"></i>
+                        <span>{{ listing.agent.phone }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-buttons">
+                <button class="btn btn-danger" (click)="deleteListing()">
+                  ლისტინგის წაშლა
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

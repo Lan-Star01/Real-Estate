@@ -29,4 +29,11 @@ export const routes: Routes = [
         (m) => m.AddListingComponent
       ),
   },
+  {
+    path: 'listing/:id',
+    loadComponent: () =>
+      import('./pages/listing-details/listing-details.component').then(
+        (m) => m.ListingDetailsComponent
+      ),
+  },
 ];
