@@ -1,3 +1,6 @@
+.navbar {
+  border-bottom: 1px solid #F93B1D;
+}
 .user-dropdown {
   position: relative;
 }

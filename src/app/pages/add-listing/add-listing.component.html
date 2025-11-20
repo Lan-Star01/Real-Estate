@@ -1,1 +1,302 @@
-<p>add-listing works!</p>
+<div class="add-listing-page">
+  <div class="container">
+    <h2 class="page-title">ლისტინგის დამატება</h2>
+
+    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+      <div class="form-section">
+        <h3 class="section-title">გარიგების ტიპი</h3>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" formControlName="is_rental" [value]="0">
+            <span>იყიდება</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" formControlName="is_rental" [value]="1">
+            <span>ქირავდება</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">მდებარეობა</h3>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              მისამართი <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="address"
+              [class.is-invalid]="isFieldInvalid('address')"
+              [class.is-valid]="isFieldValid('address')">
+            <div class="validation-feedback" [class.valid]="isFieldValid('address')" [class.invalid]="isFieldInvalid('address')">
+              <i class="bi bi-check-circle-fill"></i>
+              მინიმუმ 2 სიმბოლო
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              საფოსტო ინდექსი <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="zip_code"
+              [class.is-invalid]="isFieldInvalid('zip_code')"
+              [class.is-valid]="isFieldValid('zip_code')">
+            <div class="validation-feedback" [class.valid]="isFieldValid('zip_code')" [class.invalid]="isFieldInvalid('zip_code')">
+              <i class="bi bi-check-circle-fill"></i>
+              მხოლოდ რიცხვები
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              რეგიონი <span class="required">*</span>
+            </label>
+            <div class="custom-dropdown-wrapper">
+              <button
+                type="button"
+                class="custom-dropdown-btn"
+                (click)="toggleRegionDropdown()"
+                [class.is-invalid]="isFieldInvalid('region_id')"
+                [class.is-valid]="isFieldValid('region_id')"
+                [class.open]="regionDropdownOpen">
+                {{ getSelectedRegionName() }}
+                <i class="bi" [class.bi-chevron-down]="!regionDropdownOpen" [class.bi-chevron-up]="regionDropdownOpen"></i>
+              </button>
+
+              <div class="custom-dropdown-menu" *ngIf="regionDropdownOpen">
+                <button
+                  type="button"
+                  *ngFor="let region of regions"
+                  class="dropdown-item"
+                  (click)="selectRegion(region.id)">
+                  {{ region.name }}
+                </button>
+              </div>
+            </div>
+            <div class="validation-feedback" [class.valid]="isFieldValid('region_id')" [class.invalid]="isFieldInvalid('region_id')">
+              <i class="bi bi-check-circle-fill"></i>
+              სავალდებულო
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              ქალაქი <span class="required">*</span>
+            </label>
+            <div class="custom-dropdown-wrapper">
+              <button
+                type="button"
+                class="custom-dropdown-btn"
+                (click)="toggleCityDropdown()"
+                [disabled]="!listingForm.get('region_id')?.value"
+                [class.is-invalid]="isFieldInvalid('city_id')"
+                [class.is-valid]="isFieldValid('city_id')"
+                [class.open]="cityDropdownOpen">
+                {{ getSelectedCityName() }}
+                <i class="bi" [class.bi-chevron-down]="!cityDropdownOpen" [class.bi-chevron-up]="cityDropdownOpen"></i>
+              </button>
+
+              <div class="custom-dropdown-menu" *ngIf="cityDropdownOpen">
+                <button
+                  type="button"
+                  *ngFor="let city of cities"
+                  class="dropdown-item"
+                  (click)="selectCity(city.id)">
+                  {{ city.name }}
+                </button>
+              </div>
+            </div>
+            <div class="validation-feedback" [class.valid]="isFieldValid('city_id')" [class.invalid]="isFieldInvalid('city_id')">
+              <i class="bi bi-check-circle-fill"></i>
+              სავალდებულო
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">ბინის დეტალები</h3>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              ფასი <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="price"
+              [class.is-invalid]="isFieldInvalid('price')"
+              [class.is-valid]="isFieldValid('price')">
+            <div class="validation-feedback" [class.valid]="isFieldValid('price')" [class.invalid]="isFieldInvalid('price')">
+              <i class="bi bi-check-circle-fill"></i>
+              მხოლოდ რიცხვები
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              ფართობი <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="area"
+              [class.is-invalid]="isFieldInvalid('area')"
+              [class.is-valid]="isFieldValid('area')">
+            <div class="validation-feedback" [class.valid]="isFieldValid('area')" [class.invalid]="isFieldInvalid('area')">
+              <i class="bi bi-check-circle-fill"></i>
+              მხოლოდ რიცხვები
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              საძინებლების რაოდენობა <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="bedrooms"
+              [class.is-invalid]="isFieldInvalid('bedrooms')"
+              [class.is-valid]="isFieldValid('bedrooms')">
+            <div class="validation-feedback" [class.valid]="isFieldValid('bedrooms')" [class.invalid]="isFieldInvalid('bedrooms')">
+              <i class="bi bi-check-circle-fill"></i>
+              მხოლოდ მთელი რიცხვები
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            აღწერა <span class="required">*</span>
+          </label>
+          <textarea
+            class="form-control"
+            formControlName="description"
+            rows="5"
+            [class.is-invalid]="isFieldInvalid('description')"
+            [class.is-valid]="isFieldValid('description')"></textarea>
+          <div class="validation-feedback" [class.valid]="isFieldValid('description')" [class.invalid]="isFieldInvalid('description')">
+            <i class="bi bi-check-circle-fill"></i>
+            მინიმუმ 5 სიტყვა
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">სურათი</h3>
+        <div class="mb-3">
+          <label class="form-label">
+            ატვირთეთ ფოტო <span class="required">*</span>
+          </label>
+
+          <div class="upload-area" (click)="imagePreview ? null : fileInput.click()">
+            <div *ngIf="!imagePreview" class="upload-content">
+              <div class="upload-icon">
+                <i class="bi bi-plus-circle"></i>
+              </div>
+            </div>
+
+            <div *ngIf="imagePreview" class="image-preview-wrapper">
+              <img [src]="imagePreview" alt="Listing preview" class="image-preview">
+              <button type="button" class="remove-image-btn" (click)="removeImage(); $event.stopPropagation()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              style="display: none;">
+          </div>
+
+          <div *ngIf="isFieldInvalid('image')" class="validation-feedback invalid">
+            <i class="bi bi-check-circle-fill"></i>
+            სავალდებულო
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">აგენტი</h3>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              აირჩიე <span class="required">*</span>
+            </label>
+            <div class="custom-dropdown-wrapper">
+              <button
+                type="button"
+                class="custom-dropdown-btn"
+                (click)="toggleAgentDropdown()"
+                [class.is-invalid]="isFieldInvalid('agent_id')"
+                [class.is-valid]="isFieldValid('agent_id')"
+                [class.open]="agentDropdownOpen">
+                {{ getSelectedAgentName() }}
+                <i class="bi" [class.bi-chevron-down]="!agentDropdownOpen" [class.bi-chevron-up]="agentDropdownOpen"></i>
+              </button>
+
+              <div class="custom-dropdown-menu" *ngIf="agentDropdownOpen">
+                <button
+                  type="button"
+                  class="dropdown-item add-agent-item"
+                  (click)="openAddAgentModal()">
+                  <i class="bi bi-plus-circle"></i>
+                  დაამატე აგენტი
+                </button>
+                <button
+                  type="button"
+                  *ngFor="let agent of agents"
+                  class="dropdown-item"
+                  (click)="selectAgent(agent.id)">
+                  {{ agent.name }} {{ agent.surname }}
+                </button>
+              </div>
+            </div>
+            <div class="validation-feedback" [class.valid]="isFieldValid('agent_id')" [class.invalid]="isFieldInvalid('agent_id')">
+              <i class="bi bi-check-circle-fill"></i>
+              სავალდებულო
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="orange-line-btn" (click)="cancel()" [disabled]="isSubmitting">
+          გაუქმება
+        </button>
+        <button type="submit" class="orange-btn" [disabled]="isSubmitting">
+          <span class="text-white" *ngIf="!isSubmitting">დაამატე ლისტინგი</span>
+          <span class="text-white" *ngIf="isSubmitting">დამატება...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  *ngIf="regionDropdownOpen || cityDropdownOpen || agentDropdownOpen"
+  class="dropdown-backdrop"
+  (click)="closeAllDropdowns()">
+</div>
+
+<app-add-agent-modal
+  *ngIf="showAddAgentModal"
+  (close)="closeAddAgentModal()"
+  (agentAdded)="onAgentAdded($event)">
+</app-add-agent-modal>
