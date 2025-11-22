@@ -1,59 +1,98 @@
-# RealEstate
+# Real Estate - Property Listing Platform
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+A modern real estate property listing web application built with Angular 19. This is a portfolio project demonstrating full-stack Angular development with Firebase authentication and REST API integration.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **User Authentication**: Firebase-based login and registration system
+- **Property Listings**: Browse, filter, and view real estate listings
+- **Advanced Filtering**: Filter by region, price range, area, and number of bedrooms
+- **Property Details**: Detailed view with property information, agent contact details, and similar listings slider
+- **Add Listing**: Create new property listings with image upload
+- **Agent Management**: Add and manage real estate agents
+- **Responsive Design**: Mobile-friendly UI using Bootstrap 5
+
+## Tech Stack
+
+- **Frontend**: Angular 19
+- **Authentication**: Firebase Authentication
+- **Styling**: Bootstrap 5, Custom CSS
+- **Icons**: Bootstrap Icons
+- **API**: REST API with token-based authentication
+
+## Project Structure
+
+```
+src/app/
+├── core/
+│   ├── interceptors/      # HTTP interceptors (auth)
+│   └── services/          # API services (auth, geo, listings, agents)
+├── pages/
+│   ├── login/             # Login page
+│   ├── register/          # Registration page
+│   ├── listings/          # Main listings page with filter panel
+│   ├── listing-details/   # Property details with similar listings slider
+│   └── add-listing/       # Add new property form
+└── shared/
+    ├── filter-panel/      # Filter component with custom dropdowns
+    └── add-agent-modal/   # Agent creation modal
+```
+
+## Authentication Flow
+
+The application uses a dual-token authentication system:
+1. **Static API Token**: Required for API access
+2. **Firebase Token**: User authentication via Firebase
+
+When a user is not logged in, they are automatically redirected to the login page.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- Angular CLI (`npm install -g @angular/cli`)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up environment files in `src/environments/`:
+   - `environment.local.ts` - Development configuration
+   - Add your Firebase config and API token
+
+### Development Server
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to `http://localhost:4200/`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Building
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Demo Credentials
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To test the application, you can register a new account or use Firebase Authentication test users.
 
-```bash
-ng test
-```
+## Screenshots
 
-## Running end-to-end tests
+*Add screenshots of your application here*
 
-For end-to-end (e2e) testing, run:
+## Author
 
-```bash
-ng e2e
-```
+Portfolio project - Real Estate Property Listing Platform
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Built with Angular 19

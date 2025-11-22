@@ -30,7 +30,6 @@ export class FilterPanelComponent implements OnInit {
   areaDropdownOpen = false;
   bedroomsDropdownOpen = false;
 
-  // Modal state
   showAddAgentModal = false;
 
   selectedRegions: number[] = [];
@@ -39,6 +38,13 @@ export class FilterPanelComponent implements OnInit {
   areaMin: number | null = null;
   areaMax: number | null = null;
   bedrooms: number | null = null;
+
+  appliedRegions: number[] = [];
+  appliedPriceMin: number | null = null;
+  appliedPriceMax: number | null = null;
+  appliedAreaMin: number | null = null;
+  appliedAreaMax: number | null = null;
+  appliedBedrooms: number | null = null;
 
   priceError = '';
   areaError = '';
@@ -159,13 +165,20 @@ export class FilterPanelComponent implements OnInit {
       return;
     }
 
+    this.appliedRegions = [...this.selectedRegions];
+    this.appliedPriceMin = this.priceMin;
+    this.appliedPriceMax = this.priceMax;
+    this.appliedAreaMin = this.areaMin;
+    this.appliedAreaMax = this.areaMax;
+    this.appliedBedrooms = this.bedrooms;
+
     const filters: FilterCriteria = {
-      regions: this.selectedRegions,
-      priceMin: this.priceMin,
-      priceMax: this.priceMax,
-      areaMin: this.areaMin,
-      areaMax: this.areaMax,
-      bedrooms: this.bedrooms
+      regions: this.appliedRegions,
+      priceMin: this.appliedPriceMin,
+      priceMax: this.appliedPriceMax,
+      areaMin: this.appliedAreaMin,
+      areaMax: this.appliedAreaMax,
+      bedrooms: this.appliedBedrooms
     };
 
     this.filtersChanged.emit(filters);
@@ -208,20 +221,20 @@ export class FilterPanelComponent implements OnInit {
     this.applyFilters();
   }
 
-  getSelectedRegionNames(): string {
+  getAppliedRegionNames(): string {
     const names = this.regions
-      .filter(r => this.selectedRegions.includes(r.id))
+      .filter(r => this.appliedRegions.includes(r.id))
       .map(r => r.name);
     return names.join(', ');
   }
 
   hasActiveFilters(): boolean {
-    return this.selectedRegions.length > 0 ||
-           this.priceMin !== null ||
-           this.priceMax !== null ||
-           this.areaMin !== null ||
-           this.areaMax !== null ||
-           this.bedrooms !== null;
+    return this.appliedRegions.length > 0 ||
+           this.appliedPriceMin !== null ||
+           this.appliedPriceMax !== null ||
+           this.appliedAreaMin !== null ||
+           this.appliedAreaMax !== null ||
+           this.appliedBedrooms !== null;
   }
 
   openAddAgentModal() {

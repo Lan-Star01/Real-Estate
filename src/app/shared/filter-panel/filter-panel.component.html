@@ -205,32 +205,32 @@
     <div class="col-12">
       <div class="active-filters d-flex gap-2 align-items-center flex-wrap">
 
-        <span *ngIf="selectedRegions.length > 0" class="filter-tag">
-          {{ getSelectedRegionNames() }}
+        <span *ngIf="appliedRegions.length > 0" class="filter-tag">
+          {{ getAppliedRegionNames() }}
           <i class="bi bi-x" (click)="clearRegionFilter()"></i>
         </span>
 
-        <span *ngIf="priceMin !== null || priceMax !== null" class="filter-tag">
-          <ng-container *ngIf="priceMin !== null">{{ priceMin | number }} ₾</ng-container>
-          <ng-container *ngIf="priceMin === null">0 ₾</ng-container>
+        <span *ngIf="appliedPriceMin !== null || appliedPriceMax !== null" class="filter-tag">
+          <ng-container *ngIf="appliedPriceMin !== null">{{ appliedPriceMin | number }} ₾</ng-container>
+          <ng-container *ngIf="appliedPriceMin === null">0 ₾</ng-container>
           -
-          <ng-container *ngIf="priceMax !== null">{{ priceMax | number }} ₾</ng-container>
-          <ng-container *ngIf="priceMax === null">∞</ng-container>
+          <ng-container *ngIf="appliedPriceMax !== null">{{ appliedPriceMax | number }} ₾</ng-container>
+          <ng-container *ngIf="appliedPriceMax === null">∞</ng-container>
           <i class="bi bi-x" (click)="clearPriceFilter()"></i>
         </span>
 
-        <span *ngIf="areaMin !== null || areaMax !== null" class="filter-tag">
-          <ng-container *ngIf="areaMin !== null">{{ areaMin | number }}</ng-container>
-          <ng-container *ngIf="areaMin === null">0</ng-container>
+        <span *ngIf="appliedAreaMin !== null || appliedAreaMax !== null" class="filter-tag">
+          <ng-container *ngIf="appliedAreaMin !== null">{{ appliedAreaMin | number }}</ng-container>
+          <ng-container *ngIf="appliedAreaMin === null">0</ng-container>
           მ² -
-          <ng-container *ngIf="areaMax !== null">{{ areaMax | number }}</ng-container>
-          <ng-container *ngIf="areaMax === null">∞</ng-container>
+          <ng-container *ngIf="appliedAreaMax !== null">{{ appliedAreaMax | number }}</ng-container>
+          <ng-container *ngIf="appliedAreaMax === null">∞</ng-container>
           მ²
           <i class="bi bi-x" (click)="clearAreaFilter()"></i>
         </span>
 
-        <span *ngIf="bedrooms !== null" class="filter-tag">
-          {{ bedrooms }}
+        <span *ngIf="appliedBedrooms !== null" class="filter-tag">
+          {{ appliedBedrooms }}
           <i class="bi bi-x" (click)="clearBedroomsFilter()"></i>
         </span>
 

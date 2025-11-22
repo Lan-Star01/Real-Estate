@@ -2,6 +2,10 @@
   color: #021526;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .orange-btn {
   padding: 0.625rem 1rem;
   background-color: #F93B1D;

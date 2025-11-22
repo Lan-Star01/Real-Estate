@@ -69,12 +69,10 @@
               </div>
 
               <div class="description-section">
-                <h5>აღწერა</h5>
                 <p>{{ listing.description }}</p>
               </div>
 
               <div class="agent-section" *ngIf="listing.agent">
-                <h5>აგენტი</h5>
                 <div class="agent-card">
                   <img [src]="listing.agent.avatar" [alt]="listing.agent.name" class="agent-avatar">
                   <div class="agent-info">
@@ -103,6 +101,63 @@
           </div>
         </div>
 
+      </div>
+
+      <div *ngIf="!loading && !error && listing && similarListings.length > 0" class="similar-listings-section container-fluid">
+        <h2 class="similar-title">ბინები მსგავს ლოკაციაზე</h2>
+
+        <div class="slider-container">
+          <button
+            class="slider-arrow slider-arrow-left"
+            (click)="slideLeft()"
+            [disabled]="!canSlideLeft">
+            <i class="bi bi-arrow-left"></i>
+          </button>
+
+          <div class="slider-track">
+            <div class="slider-cards">
+              <div
+                class="slider-card"
+                *ngFor="let item of visibleListings"
+                (click)="navigateToListing(item.id)">
+                <div class="slider-card-image-wrapper">
+                  <img [src]="item.image" [alt]="item.address" class="slider-card-image">
+                  <span class="slider-card-tag" [class.rental]="item.is_rental === 1">
+                    {{ item.is_rental === 1 ? 'ქირავდება' : 'იყიდება' }}
+                  </span>
+                </div>
+                <div class="slider-card-content">
+                  <h3 class="slider-card-price">{{ item.price | number }} ₾</h3>
+                  <div class="slider-card-location">
+                    <i class="bi bi-geo-alt"></i>
+                    <span>{{ item.city?.name }}, {{ item.address }}</span>
+                  </div>
+                  <div class="slider-card-details">
+                    <div class="slider-detail-item">
+                      <i class="bi bi-house"></i>
+                      <span>{{ item.bedrooms }}</span>
+                    </div>
+                    <div class="slider-detail-item">
+                      <i class="bi bi-columns-gap"></i>
+                      <span>{{ item.area }} მ²</span>
+                    </div>
+                    <div class="slider-detail-item">
+                      <i class="bi bi-geo-alt-fill"></i>
+                      <span>{{ item.zip_code }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="slider-arrow slider-arrow-right"
+            (click)="slideRight()"
+            [disabled]="!canSlideRight">
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
       </div>
 
     </div>
