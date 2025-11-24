@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -10,24 +9,23 @@ import { User } from '@angular/fire/auth';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
-  currentUser: User | null = null;
-  dropdownOpen = false;
-
+export class NavbarComponent {
   private authService = inject(AuthService);
 
-  ngOnInit() {
-    this.authService.user$.subscribe((user: User | null) => {
-      this.currentUser = user;
-    });
-  }
+  // Signals from AuthService
+  currentUser = this.authService.currentUser;
+  isLoggedIn = this.authService.isLoggedIn;
+  userDisplayName = this.authService.userDisplayName;
+
+  // Local signal for dropdown state
+  dropdownOpen = signal(false);
 
   toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+    this.dropdownOpen.update(open => !open);
   }
 
   closeDropdown() {
-    this.dropdownOpen = false;
+    this.dropdownOpen.set(false);
   }
 
   logout() {

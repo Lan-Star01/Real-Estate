@@ -2,6 +2,20 @@
   padding: 20px 0 40px;
 }
 
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 18px;
+  color: #dc3545;
+  margin: 40px 0;
+}
+
 .no-results {
   text-align: center;
   font-size: 18px;

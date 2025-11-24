@@ -3,44 +3,60 @@
 <div class="container-fluid listings-container">
   <div class="row">
     <div class="col-12">
-      <p *ngIf="filteredListings.length === 0" class="no-results">
-        აღნიშნული მონაცემებით განცხადება არ იძებნება
-      </p>
-
-      <div class="listings-grid" *ngIf="filteredListings.length > 0">
-        <div class="listing-card" *ngFor="let listing of filteredListings" (click)="navigateToDetails(listing.id)">
-          <div class="card-image-wrapper">
-            <img [src]="listing.image" [alt]="listing.address" class="card-image">
-            <span class="listing-tag" [class.rental]="listing.is_rental === 1">
-              {{ listing.is_rental === 1 ? 'ქირავდება' : 'იყიდება' }}
-            </span>
-          </div>
-
-          <div class="card-content">
-            <h3 class="listing-price">{{ listing.price | number }} ₾</h3>
-
-            <div class="listing-location">
-              <i class="bi bi-geo-alt"></i>
-              <span>{{ listing.city?.name }}, {{ listing.address }}</span>
-            </div>
-
-            <div class="listing-details">
-              <div class="detail-item">
-                <i class="bi bi-house"></i>
-                <span>{{ listing.bedrooms }}</span>
-              </div>
-              <div class="detail-item">
-                <i class="bi bi-columns-gap"></i>
-                <span>{{ listing.area }} მ²</span>
-              </div>
-              <div class="detail-item">
-                <i class="bi bi-geo-alt-fill"></i>
-                <span>{{ listing.zip_code }}</span>
-              </div>
-            </div>
+      @if (isLoading()) {
+        <div class="loading-state">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
           </div>
         </div>
-      </div>
+      }
+
+      @if (error()) {
+        <p class="error-message">{{ error() }}</p>
+      }
+
+      @if (!isLoading() && !error() && filteredListings().length === 0) {
+        <p class="no-results">აღნიშნული მონაცემებით განცხადება არ იძებნება</p>
+      }
+
+      @if (!isLoading() && filteredListings().length > 0) {
+        <div class="listings-grid">
+          @for (listing of filteredListings(); track listing.id) {
+            <div class="listing-card" (click)="navigateToDetails(listing.id)">
+              <div class="card-image-wrapper">
+                <img [src]="listing.image" [alt]="listing.address" class="card-image">
+                <span class="listing-tag" [class.rental]="listing.is_rental === 1">
+                  {{ listing.is_rental === 1 ? 'ქირავდება' : 'იყიდება' }}
+                </span>
+              </div>
+
+              <div class="card-content">
+                <h3 class="listing-price">{{ listing.price | number }} ₾</h3>
+
+                <div class="listing-location">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>{{ listing.city?.name }}, {{ listing.address }}</span>
+                </div>
+
+                <div class="listing-details">
+                  <div class="detail-item">
+                    <i class="bi bi-house"></i>
+                    <span>{{ listing.bedrooms }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="bi bi-columns-gap"></i>
+                    <span>{{ listing.area }} მ²</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <span>{{ listing.zip_code }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
     </div>
   </div>
 </div>

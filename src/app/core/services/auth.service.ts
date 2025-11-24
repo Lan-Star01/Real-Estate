@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, computed } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -10,7 +10,8 @@ import {
   authState,
   idToken
 } from '@angular/fire/auth';
-import { Observable, from, BehaviorSubject } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
 export interface RegisterData {
@@ -33,9 +34,18 @@ export class AuthService {
   private auth: Auth = inject(Auth);
   private router = inject(Router);
 
+  // RxJS Observables (kept for compatibility)
   user$ = user(this.auth);
   authState$ = authState(this.auth);
   idToken$ = idToken(this.auth);
+
+  // Signals - modern Angular reactive state
+  currentUser = toSignal(this.user$, { initialValue: null });
+  isLoggedIn = computed(() => this.currentUser() !== null);
+  userDisplayName = computed(() => {
+    const user = this.currentUser();
+    return user?.displayName || user?.email || null;
+  });
 
   constructor() { }
 
