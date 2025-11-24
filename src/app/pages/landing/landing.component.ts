@@ -14,7 +14,6 @@ export class LandingComponent {
   private router = inject(Router);
 
   constructor() {
-    // Effect runs when isLoggedIn signal changes
     effect(() => {
       if (this.authService.isLoggedIn()) {
         this.router.navigate(['/listings']);

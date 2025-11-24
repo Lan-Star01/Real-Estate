@@ -42,7 +42,6 @@ export class ListingDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.visibleCards = 4;
     }
-    // Reset slider index if it's out of bounds after resize
     const maxIndex = Math.max(0, this.similarListings.length - this.visibleCards);
     if (this.sliderIndex > maxIndex) {
       this.sliderIndex = maxIndex;
@@ -57,7 +56,6 @@ export class ListingDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Cleanup if needed
   }
 
   loadListing(id: string) {

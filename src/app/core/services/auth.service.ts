@@ -34,12 +34,10 @@ export class AuthService {
   private auth: Auth = inject(Auth);
   private router = inject(Router);
 
-  // RxJS Observables (kept for compatibility)
   user$ = user(this.auth);
   authState$ = authState(this.auth);
   idToken$ = idToken(this.auth);
 
-  // Signals - modern Angular reactive state
   currentUser = toSignal(this.user$, { initialValue: null });
   isLoggedIn = computed(() => this.currentUser() !== null);
   userDisplayName = computed(() => {

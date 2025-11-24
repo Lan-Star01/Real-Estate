@@ -12,12 +12,10 @@ import { AuthService } from '../../core/services/auth.service';
 export class NavbarComponent {
   private authService = inject(AuthService);
 
-  // Signals from AuthService
   currentUser = this.authService.currentUser;
   isLoggedIn = this.authService.isLoggedIn;
   userDisplayName = this.authService.userDisplayName;
 
-  // Local signal for dropdown state
   dropdownOpen = signal(false);
 
   toggleDropdown() {

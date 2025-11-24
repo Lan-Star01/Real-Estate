@@ -14,13 +14,11 @@ export class ListingsComponent implements OnInit {
   private router = inject(Router);
   private listingsService = inject(ListingsService);
 
-  // Signals for reactive state
   listings = signal<any[]>([]);
   currentFilters = signal<FilterCriteria | null>(null);
   isLoading = signal(true);
   error = signal<string | null>(null);
 
-  // Computed signal for filtered listings
   filteredListings = computed(() => {
     const allListings = this.listings();
     const filters = this.currentFilters();
